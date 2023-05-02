@@ -6,58 +6,52 @@
 struct Student {
 	int id;
 	int korean, english, math;
+	int check;
 };
 
-void bubbleSortDescendingByKorean(struct Student* A, int n) {
-	int i, j;
-	struct Student temp;
-
-	for (i = 0; i < n - 1; i++)
-		for (j = 0; j < n - 1 - i; j++)
-			if (A[j].korean < A[j + 1].korean) {
-				temp = A[j];
-				A[j] = A[j + 1];
-				A[j + 1] = temp;
-			}
+void setCheck(struct Student* A, int n, int number)
+{
+	int i;
+	if (number == 1) {
+		for (i = 0; i < n; i++)
+			A[i].check = A[i].korean;
+	}
+	else if (number == 2) {
+		for (i = 0; i < n; i++)
+		A[i].check = A[i].english;
+	}
+	else if (number == 3) {
+		for (i = 0; i < n; i++)
+		A[i].check = A[i].math;
+	}
+	else if (number == 4) {
+		for (i = 0; i < n; i++)
+		A[i].check = A[i].id;
+	}
 }
 
-void bubbleSortDescendingByMath(struct Student* A, int n) {
+void bubbleSort(struct Student* A, int n, int choose) {
 	int i, j;
 	struct Student temp;
 
-	for (i = 0; i < n - 1; i++)
-		for (j = 0; j < n - 1 - i; j++)
-			if (A[j].math < A[j + 1].math) {
-				temp = A[j];
-				A[j] = A[j + 1];
-				A[j + 1] = temp;
-			}
-}
-
-void bubbleSortDescendingByEnglish(struct Student* A, int n) {
-	int i, j;
-	struct Student temp;
-
-	for (i = 0; i < n - 1; i++)
-		for (j = 0; j < n - 1 - i; j++)
-			if (A[j].english < A[j + 1].english) {
-				temp = A[j];
-				A[j] = A[j + 1];
-				A[j + 1] = temp;
-			}
-}
-
-void bubbleSortAscendingById(struct Student* A, int n) {
-	int i, j;
-	struct Student temp;
-
-	for (i = 0; i < n - 1; i++)
-		for (j = 0; j < n - 1 - i; j++)
-			if (A[j].id > A[j + 1].id) {
-				temp = A[j];
-				A[j] = A[j + 1];
-				A[j + 1] = temp;
-			}
+	if (choose == 4) {
+		for (i = 0; i < n - 1; i++)
+			for (j = 0; j < n - 1 - i; j++)
+				if (A[j].id > A[j + 1].id) {
+					temp = A[j];
+					A[j] = A[j + 1];
+					A[j + 1] = temp;
+				}
+	}
+	else {
+		for (i = 0; i < n - 1; i++)
+			for (j = 0; j < n - 1 - i; j++)
+				if (A[j].check < A[j + 1].check) {
+					temp = A[j];
+					A[j] = A[j + 1];
+					A[j + 1] = temp;
+				}
+	}
 }
 
 int main(void)
@@ -89,14 +83,22 @@ int main(void)
 	while (choose != 0) {
 		printf("\n정렬 기준 선택(1:국어,2:영어,3:수학,4:id(오름차순),0:끝내기):");
 		scanf("%d", &choose);
-		if (choose == 1)
-			bubbleSortDescendingByKorean(A, n);
-		else if (choose == 2)
-			bubbleSortDescendingByEnglish(A, n);
-		else if (choose == 3)
-			bubbleSortDescendingByMath(A, n);
-		else if (choose == 4)
-			bubbleSortAscendingById(A, n);
+		if (choose == 1) {
+			setCheck(A, n, 1);
+			bubbleSort(A, n, 1);
+		}
+		else if (choose == 2) {
+			setCheck(A, n, 2);
+			bubbleSort(A, n, 2);
+		}
+		else if (choose == 3) {
+			setCheck(A, n, 3);
+			bubbleSort(A, n, 3);
+		}
+		else if (choose == 4) {
+			setCheck(A, n, 4);
+			bubbleSort(A, n, 4);
+		}
 		else if (choose == 0)
 			break;
 		else
